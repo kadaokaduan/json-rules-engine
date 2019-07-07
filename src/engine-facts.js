@@ -1,13 +1,18 @@
-'use strict'
+'use strict';
 
-let SuccessEventFact = function () {
-  let successTriggers = []
-  return (params = {}) => {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var SuccessEventFact = function SuccessEventFact() {
+  var successTriggers = [];
+  return function () {
+    var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
     if (params.event) {
-      successTriggers.push(params.event)
+      successTriggers.push(params.event);
     }
-    return successTriggers
-  }
-}
+    return successTriggers;
+  };
+};
 
-export { SuccessEventFact }
+exports.SuccessEventFact = SuccessEventFact;
