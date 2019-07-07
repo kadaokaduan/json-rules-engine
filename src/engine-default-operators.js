@@ -10,6 +10,16 @@ Operators.push(new Operator('notIn', (a, b) => b.indexOf(a) === -1))
 
 Operators.push(new Operator('contains', (a, b) => a.indexOf(b) > -1, Array.isArray))
 Operators.push(new Operator('doesNotContain', (a, b) => a.indexOf(b) === -1, Array.isArray))
+Operators.push(new Operator('containsAnyOf', function (a, b) {
+  //console.log(a instanceof Array );
+  //console.log(b instanceof Array );
+  for(var i = 0; i < b.length; i++){
+    if(a.indexOf(b[i]) > -1){
+      return true;
+    }
+  }
+  return false;
+}, Array.isArray))
 
 function numberValidator (factValue) {
   return Number.parseFloat(factValue).toString() !== 'NaN'

@@ -58,8 +58,8 @@ export default class Condition {
       if (this.params) {
         props.params = this.params
       }
-      if (this.path) {
-        props.path = this.path
+      if (this.jsonpath) {
+        props.jsonpath = this.jsonpath
       }
     }
     if (stringify) {
@@ -74,7 +74,7 @@ export default class Condition {
   _getValue (almanac) {
     let value = this.value
     if (isObjectLike(value) && value.hasOwnProperty('fact')) { // value: { fact: 'xyz' }
-      return almanac.factValue(value.fact, value.params, value.path)
+      return almanac.factValue(value.fact, value.params, value.jsonpath)
     }
     return Promise.resolve(value)
   }
@@ -98,7 +98,7 @@ export default class Condition {
 
     return this._getValue(almanac) // todo - parallelize
       .then(rightHandSideValue => {
-        return almanac.factValue(this.fact, this.params, this.path)
+        return almanac.factValue(this.fact, this.params, this.jsonpath)
           .then(leftHandSideValue => {
             let result = op.evaluate(leftHandSideValue, rightHandSideValue)
             debug(`condition::evaluate <${leftHandSideValue} ${this.operator} ${rightHandSideValue}?> (${result})`)

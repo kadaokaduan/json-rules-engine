@@ -6,6 +6,7 @@ import debug from './debug'
 
 import selectn from 'selectn'
 import isObjectLike from 'lodash.isobjectlike'
+import jp from 'jsonpath'
 
 /**
  * Fact results lookup
@@ -82,7 +83,7 @@ export default class Almanac {
    * @param  {String} path - object
    * @return {Promise} a promise which will resolve with the fact computation.
    */
-  factValue (factId, params = {}, path = '') {
+  factValue (factId, params = {}, jsonpath = '') {
     let factValuePromise
     let fact = this._getFact(factId)
     if (fact === undefined) {
@@ -105,15 +106,15 @@ export default class Almanac {
         factValuePromise = this._setFactValue(fact, params, fact.calculate(params, this))
       }
     }
-    if (path) {
+    if (jsonpath) {
       return factValuePromise
         .then(factValue => {
           if (isObjectLike(factValue)) {
-            let pathValue = selectn(path)(factValue)
-            debug(`condition::evaluate extracting object property ${path}, received: ${pathValue}`)
+            let pathValue = jp.query(factValue, jsonpath)
+            debug(`condition::evaluate extracting object property ${jsonpath}, received: ${pathValue}`)
             return pathValue
           } else {
-            debug(`condition::evaluate could not compute object path(${path}) of non-object: ${factValue} <${typeof factValue}>; continuing with ${factValue}`)
+            debug(`condition::evaluate could not compute object path(${jsonpath}) of non-object: ${factValue} <${typeof factValue}>; continuing with ${factValue}`)
             return factValue
           }
         })
