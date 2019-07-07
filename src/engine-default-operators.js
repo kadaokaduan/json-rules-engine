@@ -1,22 +1,62 @@
-'use strict'
+'use strict';
 
-import Operator from './operator'
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
-let Operators = []
-Operators.push(new Operator('equal', (a, b) => a === b))
-Operators.push(new Operator('notEqual', (a, b) => a !== b))
-Operators.push(new Operator('in', (a, b) => b.indexOf(a) > -1))
-Operators.push(new Operator('notIn', (a, b) => b.indexOf(a) === -1))
+var _operator = require('./operator');
 
-Operators.push(new Operator('contains', (a, b) => a.indexOf(b) > -1, Array.isArray))
-Operators.push(new Operator('doesNotContain', (a, b) => a.indexOf(b) === -1, Array.isArray))
+var _operator2 = _interopRequireDefault(_operator);
 
-function numberValidator (factValue) {
-  return Number.parseFloat(factValue).toString() !== 'NaN'
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Operators = [];
+Operators.push(new _operator2.default('equal', function (a, b) {
+  return a === b;
+}));
+Operators.push(new _operator2.default('notEqual', function (a, b) {
+  return a !== b;
+}));
+Operators.push(new _operator2.default('in', function (a, b) {
+  return b.indexOf(a) > -1;
+}));
+Operators.push(new _operator2.default('notIn', function (a, b) {
+  return b.indexOf(a) === -1;
+}));
+
+Operators.push(new _operator2.default('contains', function (a, b) {
+  return a.indexOf(b) > -1;
+}, Array.isArray));
+Operators.push(new _operator2.default('doesNotContain', function (a, b) {
+  return a.indexOf(b) === -1;
+}, Array.isArray));
+
+//custom oprations
+Operators.push(new _operator2.default('containsAnyOf', function (a, b) {
+  //console.log(a instanceof Array );
+  //console.log(b instanceof Array );
+  for(var i = 0; i < b.length; i++){
+    if(a.indexOf(b[i]) > -1){
+      return true;
+    }
+  }
+  return false;
+}, Array.isArray));
+
+function numberValidator(factValue) {
+  return Number.parseFloat(factValue).toString() !== 'NaN';
 }
-Operators.push(new Operator('lessThan', (a, b) => a < b, numberValidator))
-Operators.push(new Operator('lessThanInclusive', (a, b) => a <= b, numberValidator))
-Operators.push(new Operator('greaterThan', (a, b) => a > b, numberValidator))
-Operators.push(new Operator('greaterThanInclusive', (a, b) => a >= b, numberValidator))
+Operators.push(new _operator2.default('lessThan', function (a, b) {
+  return a < b;
+}, numberValidator));
+Operators.push(new _operator2.default('lessThanInclusive', function (a, b) {
+  return a <= b;
+}, numberValidator));
+Operators.push(new _operator2.default('greaterThan', function (a, b) {
+  return a > b;
+}, numberValidator));
+Operators.push(new _operator2.default('greaterThanInclusive', function (a, b) {
+  return a >= b;
+}, numberValidator));
 
-export default Operators
+exports.default = Operators;
