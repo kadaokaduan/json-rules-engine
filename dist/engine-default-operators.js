@@ -30,11 +30,93 @@ Operators.push(new _operator2.default('contains', function (a, b) {
 Operators.push(new _operator2.default('doesNotContain', function (a, b) {
   return a.indexOf(b) === -1;
 }, Array.isArray));
+
 Operators.push(new _operator2.default('containsAnyOf', function (a, b) {
   //console.log(a instanceof Array );
   //console.log(b instanceof Array );
   for (var i = 0; i < b.length; i++) {
     if (a.indexOf(b[i]) > -1) {
+      return true;
+    }
+  }
+  return false;
+}, Array.isArray));
+
+Operators.push(new _operator2.default('containsAllOf', function (a, b) {
+  //console.log(a instanceof Array );
+  //console.log(b instanceof Array );
+  for (var i = 0; i < b.length; i++) {
+    if (a.indexOf(b[i]) === -1) {
+      return false;
+    }
+  }
+  return true;
+}, Array.isArray));
+
+Operators.push(new _operator2.default('containsAnyOfByRegexp', function (a, b) {
+  //console.log(a instanceof Array );
+  //console.log(b instanceof Array );
+  for (var i = 0; i < b.length; i++) {
+    var patt = b[i].length == 1 ? new RegExp(b[i][0]) : new RegExp(b[i][0], b[i][1]);
+    if (patt.test(a) == true) {
+      return true;
+    }
+  }
+  return false;
+}, Array.isArray));
+
+Operators.push(new _operator2.default('containsAllOfByRegexp', function (a, b) {
+  //console.log(a instanceof Array );
+  //console.log(b instanceof Array );
+  for (var i = 0; i < b.length; i++) {
+    var patt = b[i].length == 1 ? new RegExp(b[i][0]) : new RegExp(b[i][0], b[i][1]);
+    if (patt.test(a) == false) {
+      return false;
+    }
+  }
+  return true;
+}, Array.isArray));
+
+Operators.push(new _operator2.default('doesntContainsAnyOf', function (a, b) {
+  //console.log(a instanceof Array );
+  //console.log(b instanceof Array );
+  for (var i = 0; i < b.length; i++) {
+    if (a.indexOf(b[i]) > -1) {
+      return false;
+    }
+  }
+  return true;
+}, Array.isArray));
+
+Operators.push(new _operator2.default('doesntContainsAllOf', function (a, b) {
+  //console.log(a instanceof Array );
+  //console.log(b instanceof Array );
+  for (var i = 0; i < b.length; i++) {
+    if (a.indexOf(b[i]) === -1) {
+      return true;
+    }
+  }
+  return false;
+}, Array.isArray));
+
+Operators.push(new _operator2.default('doesntContainsAnyOfByRegexp', function (a, b) {
+  //console.log(a instanceof Array );
+  //console.log(b instanceof Array );
+  for (var i = 0; i < b.length; i++) {
+    var patt = b[i].length == 1 ? new RegExp(b[i][0]) : new RegExp(b[i][0], b[i][1]);
+    if (patt.test(a) == true) {
+      return false;
+    }
+  }
+  return true;
+}, Array.isArray));
+
+Operators.push(new _operator2.default('doesntContainsAllOfByRegexp', function (a, b) {
+  //console.log(a instanceof Array );
+  //console.log(b instanceof Array );
+  for (var i = 0; i < b.length; i++) {
+    var patt = b[i].length == 1 ? new RegExp(b[i][0]) : new RegExp(b[i][0], b[i][1]);
+    if (patt.test(a) == false) {
       return true;
     }
   }
